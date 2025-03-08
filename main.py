@@ -94,8 +94,9 @@ if archivo_subido is not None:
     cadena_resumen  = load_summarize_chain(
         llm=llm, 
         chain_type="map_reduce",
-        prompt=resumen_prompt
-        )
+        map_prompt=resumen_prompt,  # Usa el prompt para cada fragmento
+        combine_prompt=resumen_prompt  # Usa el mismo prompt para combinar los resúmenes
+    )
 
     resumen_generado = cadena_resumen.run(documentos_divididos)
 
