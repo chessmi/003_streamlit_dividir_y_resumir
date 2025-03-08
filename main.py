@@ -91,13 +91,12 @@ if archivo_subido is not None:
         template="Resume el siguiente texto en español:\n\n{texto}"
     )
     
-    cadena_resumen  = load_summarize_chain(
+    cadena_resumen = load_summarize_chain(
         llm=llm, 
-        chain_type="map_reduce",
-        map_prompt=resumen_prompt,  # Usa el prompt para cada fragmento
-        combine_prompt=resumen_prompt  # Usa el mismo prompt para combinar los resúmenes
+        chain_type="stuff",
+        prompt=resumen_prompt
     )
-
+    
     resumen_generado = cadena_resumen.run(documentos_divididos)
 
     st.write(resumen_generado)
