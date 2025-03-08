@@ -3,6 +3,7 @@ from langchain import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.prompts import PromptTemplate
 import pandas as pd
 from io import StringIO
 
@@ -84,9 +85,16 @@ if archivo_subido is not None:
 
     llm = cargar_LLM(api_key_openai=openai_api_key)
 
+    # Crear prompt para resumir en español
+    resumen_prompt = PromptTemplate(
+        input_variables=["texto"],
+        template="Resume el siguiente texto en español:\n\n{texto}"
+    )
+    
     cadena_resumen  = load_summarize_chain(
         llm=llm, 
-        chain_type="map_reduce"
+        chain_type="map_reduce",
+        prompt=resumen_prompt
         )
 
     resumen_generado = cadena_resumen.run(documentos_divididos)
