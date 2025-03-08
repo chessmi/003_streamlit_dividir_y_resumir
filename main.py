@@ -82,7 +82,7 @@ if archivo_subido is not None:
 
     documentos_divididos = divisor_texto.create_documents([texto_archivo])
 
-    llm = cargar_LLM(openai_api_key=openai_api_key)
+    llm = cargar_LLM(api_key_openai=openai_api_key)
 
     cadena_resumen  = load_summarize_chain(
         llm=llm, 
