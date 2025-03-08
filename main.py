@@ -10,7 +10,7 @@ from io import StringIO
 # Función para cargar el modelo de lenguaje (LLM)
 def cargar_LLM(api_key_openai):
     return ChatOpenAI(
-        model="gpt-4",  # Asegúrate de usar un modelo compatible
+        model="gpt-3.5-turbo",  # Asegúrate de usar un modelo compatible
         temperature=0,
         openai_api_key=api_key_openai
     )
