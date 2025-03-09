@@ -89,12 +89,21 @@ if archivo_subido is not None:
         input_variables=["texto"],
         template="Resume el siguiente texto en español:\n\n{texto}"
     )
-    
+    '''
     cadena_resumen = load_summarize_chain(
         llm=llm, 
         chain_type="map_reduce",
         prompt=resumen_prompt
     )
+    '''
+    from langchain.chains.combine_documents.stuff import StuffDocumentsChain
+    from langchain.chains.llm import LLMChain
+    
+    # Crear cadena de LLM para resumen
+    llm_chain = LLMChain(llm=llm, prompt=resumen_prompt)
+
+    # Crear cadena de combinación de documentos
+    cadena_resumen = StuffDocumentsChain(llm_chain=llm_chain)
     
     resumen_generado = cadena_resumen.run(documentos_divididos)
 
