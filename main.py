@@ -1,6 +1,6 @@
 import streamlit as st
 from langchain import PromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
@@ -9,11 +9,9 @@ from io import StringIO
 
 # Función para cargar el modelo de lenguaje (LLM)
 def cargar_LLM(api_key_openai):
-    return ChatOpenAI(
-        model="gpt-3.5-turbo",  # Asegúrate de usar un modelo compatible
-        temperature=0,
-        openai_api_key=api_key_openai
-    )
+    # Make sure your openai_api_key is set as an environment variable
+    llm = OpenAI(temperature=0, openai_api_key=api_key_openai)
+    return llm
 
 # Configuración de la página
 st.set_page_config(page_title="Resumidor de Texto con IA")
@@ -94,7 +92,7 @@ if archivo_subido is not None:
     
     cadena_resumen = load_summarize_chain(
         llm=llm, 
-        chain_type="stuff",
+        chain_type="map_reduce",
         prompt=resumen_prompt
     )
     
